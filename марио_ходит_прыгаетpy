@@ -1,0 +1,82 @@
+import pygame
+
+
+def load_image(name, colorkey=None) -> pygame.Surface:
+    pygame.init()
+    image = pygame.image.load(name)
+    if colorkey is not None:
+        if colorkey == -1:
+            colorkey = image.get_at((0, 0))
+            image.set_colorkey(colorkey)
+        else:
+            image = image.convert_alpha()
+    return image
+
+
+class Mario(pygame.sprite.Sprite):
+    image = pygame.image.load('image/человек_правая/чел1_правая.png')
+    image_2_r = pygame.image.load('image/человек_правая/чел2_правая.png')
+    img_3_r = pygame.image.load('image/человек_правая/чел3_правая.png')
+    img_4_r = pygame.image.load('image/человек_правая/чел4_правая.png')
+    image_1_l = pygame.image.load('image/человек_левая/чел1_лев (2).png')
+    img_2_l = pygame.image.load('image/человек_левая/чел4_лев (2).png')
+    img_3_l = pygame.image.load('image/человек_левая/чел3_лев.png')
+    img_4_l = pygame.image.load('image/человек_левая/чел2_лев.png')
+    img_jump = pygame.image.load('image/человек_левая/чел2_лев.png')
+
+    def __init__(self, *groups):
+        super().__init__(*groups)
+        self.walk_right = (Mario.image, Mario.image_2_r, Mario.img_3_r, Mario.img_4_r)
+        self.walk_left = (Mario.image_1_l, Mario.img_2_l, Mario.img_3_l, Mario.img_4_l)
+        self.count = 0
+        self.rect = self.image.get_rect()
+        self.rect.x = 100
+        self.rect.y = 290
+        self.img_jump = self.walk_right[3]
+        self.jump = 6
+        self.flag = False
+
+    def update(self, *args) -> None:
+        if args and args[0].type == pygame.KEYDOWN and args[0].key == pygame.K_RIGHT:
+            self.image = self.walk_right[self.count % 3]
+            self.count += 1
+            self.rect.move_ip(8, 0)
+        if args and args[0].type == pygame.KEYDOWN and args[0].key == pygame.K_LEFT:
+            self.image = self.walk_left[self.count % 3]
+            self.count += 1
+            self.rect.move_ip(-8, 0)
+        if args and (args[0].type == pygame.KEYUP or args[0].type == pygame.KEYDOWN) and args[0].key == pygame.K_UP:
+            if self.jump >= -6:
+                if self.jump > 0:
+                    self.rect.y -= (self.jump * self.jump) // 2
+                else:
+                    self.rect.y += (self.jump * self.jump) // 2
+                self.jump -= 1
+            else:
+                self.jump = 6
+            self.image = self.img_jump
+
+
+if __name__ == '__main__':
+    size = w, h = (620, 620)
+    screen = pygame.display.set_mode(size)
+    running = True
+    image = load_image('image/человек_правая/чел1_правая.png', -1)
+    img_2 = pygame.transform.scale(image, (100, 100))
+    screen.fill((0, 0, 40))
+    all_sprite = pygame.sprite.Group()
+    Mario(all_sprite)
+    hero = Mario()
+    clock = pygame.time.Clock()
+    fps = 30
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                hero.flag = True
+            screen.fill((0, 0, 40))
+            all_sprite.draw(screen)
+            all_sprite.update(event)
+        clock.tick(fps)
+        pygame.display.flip()
