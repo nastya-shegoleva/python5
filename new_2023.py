@@ -1,8 +1,7 @@
-from random import choice, sample
+from random import choice, randrange, sample
 
 import pygame
-import os
-import sys
+import os, sys
 
 from data_db import db_session
 from data_db.creating_tag import add_inf_game, add_stand_game
@@ -145,14 +144,14 @@ def flag_step(flag):
 
 
 class Ghost(Sprite):
-    columns = 6
+    columns = 10
     rows = 1
 
-    pink = pygame.transform.scale(load_image("ghost_pink.png", -1), ((SIZE_SP - 10) * 6, (SIZE_SP - 10)))
+    pink = pygame.transform.scale(load_image("main_hero (2).png"), ((SIZE_SP - 10) * 12, (SIZE_SP) * 2))
     red = pygame.transform.scale(load_image("ghost_red.png", -1), ((SIZE_SP - 10) * 6, (SIZE_SP - 10)))
-    blue = pygame.transform.scale(load_image("ghost_blue.png", -1), ((SIZE_SP - 10) * 6, (SIZE_SP - 10)))
-    orange = pygame.transform.scale(load_image("ghost_orange.png", -1), ((SIZE_SP - 10) * 6, (SIZE_SP - 10)))
-    ghost_color = (pink, red, blue, orange)
+    # blue = pygame.transform.scale(load_image("ghost_blue.png", -1), ((SIZE_SP - 10) * 6, (SIZE_SP - 10)))
+    # orange = pygame.transform.scale(load_image("ghost_orange.png", -1), ((SIZE_SP - 10) * 6, (SIZE_SP - 10)))
+    ghost_color = (pink, red)
 
     def __init__(self, x, y):
         super().__init__(ghost_group)
@@ -345,7 +344,7 @@ def load_level(filename):
 
 def generate_level(levels):
     pacman, x, y, count_local = None, None, None, 0
-    for y in range(len((levels))):
+    for y in range(len(levels)):
         for x in range(len(levels[y])):
             if levels[y][x] == '.':
                 Dot(x * SIZE_SP, y * SIZE_SP)

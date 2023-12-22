@@ -495,7 +495,7 @@ def game_over_screen():
         screen.blit(game_over_img, (0, 0, scr_x + 1, scr_y + 1))
 
         pygame.display.flip()
-    splash_screen()
+    new_inf()
 
 
 def win_screen():
@@ -531,8 +531,6 @@ def close():
 
 class Button(Sprite):
     button_green = pygame.transform.scale(load_image('button_green.png', -1), (SIZE_SP * 12, SIZE_SP * 4))
-
-    # button_red = pygame.transform.scale(load_image('red_button.png', -1), (SIZE_SP * 12, SIZE_SP * 4))
 
     def __init__(self, button_group, text, x, y):
         super().__init__(button_group)
@@ -713,6 +711,35 @@ def rating_screen():
         button_group.draw(screen)
         button_group.update(screen)
         pygame.display.flip()
+
+
+def new_inf():
+    global level, SCORE, scr_x, scr_y, particle_group, hero_group, dot_group, screen, \
+        ghost_group, ghost_flag, chet, level_num_2
+    SIZE_SCREEN = (scr_x) * SIZE_SP, (scr_y) * SIZE_SP
+    game_over_img = pygame.transform.scale(load_image('SNAKE.png'), SIZE_SCREEN)
+    screen = pygame.display.set_mode(SIZE_SCREEN)
+    start = True
+    SCORE = 0
+    level = None
+    r = True
+    while r:
+        screen.blit(game_over_img, (0, 0, scr_x + 1, scr_y + 1))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                close()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                r = False
+
+        level = 'inf'
+        hero_group = pygame.sprite.Group()
+        dot_group = pygame.sprite.Group()
+        particle_group = pygame.sprite.Group()
+        ghost_group = pygame.sprite.Group()
+        screen = pygame.display.set_mode(((scr_x) * SIZE_SP, (scr_y) * SIZE_SP))
+
+        pygame.display.flip()
+    start_game_inf()
 
 
 def splash_screen():

@@ -5,8 +5,10 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((800, 450))
 pygame.display.set_caption('My Game')
 flag = True
-foto_new = pygame.image.load('image/background.jpg').convert_alpha()
+foto_new = pygame.image.load('image/location1.jpg').convert_alpha()
 foto = pygame.transform.scale(foto_new, (800, 450))
+foto_new_2 = pygame.image.load('image/локация2_2_2 (1).jpg').convert_alpha()
+foto_2 = pygame.transform.scale(foto_new_2, (800, 450))
 walk_right = [pygame.image.load('image/человек_правая/чел1_правая.png').convert_alpha(),
               pygame.image.load('image/человек_правая/чел2_правая.png').convert_alpha(),
               pygame.image.load('image/человек_правая/чел3_правая.png').convert_alpha(),
@@ -28,7 +30,7 @@ x = 100
 player_speed = 5
 jump = 10
 flag_jump = False
-y_pos = 290
+y_pos = 320
 x_pos_ghost = 736
 ghost_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(ghost_timer, 5000)

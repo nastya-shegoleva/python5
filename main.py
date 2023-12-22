@@ -1,7 +1,8 @@
 from random import choice, randrange
 
 import pygame
-import os, sys
+import os
+import sys
 
 from data_db_snake import db_session_snake
 from data_db_snake.creating_tag_snake import add_inf_game, add_stand_game
@@ -530,8 +531,6 @@ def close():
 
 class Button(Sprite):
     button_green = pygame.transform.scale(load_image('button_green.png', -1), (SIZE_SP * 12, SIZE_SP * 4))
-
-    # button_red = pygame.transform.scale(load_image('red_button.png', -1), (SIZE_SP * 12, SIZE_SP * 4))
 
     def __init__(self, button_group, text, x, y):
         super().__init__(button_group)
