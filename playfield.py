@@ -34,7 +34,7 @@ def draw_board():
                 # рисуем нолик
 
 
-def if_winner():
+def winners():
     for i in range(BOARD_SIZE):
         if (board[i][0] == board[i][1] == board[i][2]) and board[i][0]:
             return board[i][0]
@@ -66,14 +66,14 @@ def main():
                     else:
                         symbol = 'X'
         draw_board()
-        winner = ()
+        winner = winners()
         if winner:
             SCREEN.fill((255, 255, 255))
             SCREEN.blit(font.render(f"{winner} wins", True, BLACK), (SIZE[0] / 2 - FONT_SIZE, SIZE[1] / 2 - FONT_SIZE))
             pygame.display.update()
             pygame.time.wait(1500)
             return
-        elif all([all(row) for row in board]) and winner is None:  # в случае, если никто не выиграл
+        elif all([all(row) for row in board]) and winner is None: # в случае, если никто не выиграл
             SCREEN.fill((255, 255, 255))
             SCREEN.blit(font.render("Friendship won", True, BLACK), (SIZE[0] / 2 - 120, SIZE[1] / 2 - FONT_SIZE))
             pygame.display.update()
